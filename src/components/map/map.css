@@ -1,0 +1,18 @@
+.map-wrapper {
+  margin: 0 auto;
+  display: block;
+}
+
+.earth {
+  fill: #75daff;
+}
+
+.graticule {
+  fill: none;
+  stroke: #3f3f3f;
+  stroke-width: 1px;
+}
+
+.country:hover {
+  fill: red;
+}
