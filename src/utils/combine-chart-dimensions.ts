@@ -5,6 +5,8 @@ export type Dimensions = {
   marginRight?: number;
   marginBottom?: number;
   marginLeft?: number;
+  boundedWidth?: number;
+  boundedHeight?: number;
 };
 
 export const combineChartDimensions = (dimensions: Dimensions) => {

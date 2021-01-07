@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo } from "react";
 
 import {
   geoEqualEarth,
@@ -9,10 +9,17 @@ import {
 } from "d3-geo";
 
 import { useChartDimensions } from "../../hooks/use-chart-dimensions";
+import { Dimensions } from "../../utils/combine-chart-dimensions";
 
 import data from "../../maps/world-geojson.json";
-
 import "./map.css";
+
+const defaultMap = data;
+
+interface MapProps {
+  chartDimensions?: Dimensions;
+  map?: any;
+}
 
 const countryNameAccessor = (d: any) => d.properties.NAME;
 const countryIdAccessor = (d: any) => d.properties.ADM0_A3_IS;
@@ -25,10 +32,14 @@ const windowDimensions = {
 
 const sphere: GeoSphere = { type: "Sphere" };
 
-export const Map: React.FC = () => {
+export const Map: React.FC<MapProps> = ({
+  chartDimensions = windowDimensions,
+  map = defaultMap,
+}) => {
   const projection = useMemo(
-    () => geoEqualEarth().fitWidth(windowDimensions.boundedWidth, sphere),
-    []
+    () =>
+      geoEqualEarth().fitWidth(chartDimensions.boundedWidth as number, sphere),
+    [chartDimensions.boundedWidth]
   );
   const pathGenerator = useMemo(() => geoPath(projection), [projection]);
   const [[x0, y0], [x1, y1]] = useMemo(() => pathGenerator.bounds(sphere), [
@@ -40,19 +51,13 @@ export const Map: React.FC = () => {
   ]);
 
   windowDimensions.height = y1;
-  const { setElement, dimensions } = useChartDimensions(windowDimensions);
+  const { setElement, dimensions } = useChartDimensions(chartDimensions);
 
-  const handleCountryClick = useCallback((country) => {
-    console.log(country);
-    alert(countryNameAccessor(country));
-  }, []);
-
-  const countries = data.features.map((country) => (
+  const countries = map.features.map((country: any) => (
     <path
       key={countryIdAccessor(country)}
       className="country"
       d={pathGenerator(country as GeoPermissibleObjects) as string}
-      onClick={() => handleCountryClick(country)}
     />
   ));
 
