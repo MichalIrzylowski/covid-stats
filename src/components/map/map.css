@@ -9,10 +9,10 @@
 
 .graticule {
   fill: none;
-  stroke: #3f3f3f;
+  stroke: rgba(0, 0, 0, 0.1);
   stroke-width: 1px;
 }
 
 .country:hover {
-  fill: red;
+  cursor: pointer;
 }

@@ -14,8 +14,12 @@
     "d3": "^6.3.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
     "react-scripts": "4.0.1",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
     "resize-observer-polyfill": "^1.5.1",
+    "typesafe-actions": "^5.1.0",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
   },
@@ -23,10 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "schema:fetch": "node ./src/scripts/fetch-schema.js",
-    "schema:generate": "node ./src/scripts/schema-codegen.js --srcPath ./src/typings/api-schema.json --destPath ./src/typings/api --separatedFiles false",
-    "schema:codegen": "npm run schema:fetch && npm run schema:generate"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -47,7 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@codegena/oapi3ts-cli": "^2.1.10-alpha.8",
-    "@types/d3": "^6.2.0"
+    "@types/d3": "^6.2.0",
+    "@types/react-redux": "^7.1.15"
   }
 }
