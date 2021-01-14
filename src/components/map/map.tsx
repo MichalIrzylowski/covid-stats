@@ -7,9 +7,10 @@ import {
   geoGraticule10,
   GeoPermissibleObjects,
 } from "d3-geo";
-
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
+
+import { Popover } from "antd";
 
 import { useChartDimensions } from "../../hooks/use-chart-dimensions";
 import { Dimensions } from "../../utils/combine-chart-dimensions";
@@ -78,8 +79,10 @@ export const Map: React.FC<MapProps> = ({
   const countries = map.features.map((country: any) => {
     if (!covidData) return undefined;
 
+    const countryName = countryNameAccessor(country);
+
     const countryData = covidData.find(
-      (d: any) => covidDataCountryAccessor(d) === countryNameAccessor(country)
+      (d: any) => covidDataCountryAccessor(d) === countryName
     );
 
     const color = countryData
@@ -87,12 +90,14 @@ export const Map: React.FC<MapProps> = ({
       : "grey";
 
     return (
-      <path
-        key={countryNameAccessor(country)}
-        className="country"
-        d={pathGenerator(country as GeoPermissibleObjects) as string}
-        fill={color as string}
-      />
+      <Popover title={countryName}>
+        <path
+          key={countryName}
+          className="country"
+          d={pathGenerator(country as GeoPermissibleObjects) as string}
+          fill={color as string}
+        />
+      </Popover>
     );
   });
 
