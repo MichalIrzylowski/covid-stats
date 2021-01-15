@@ -1,5 +1,5 @@
 import { createAsyncAction } from "typesafe-actions";
-import { Populations } from "./population";
+import { DailyCountryData } from "@custom-types/daily-country-data";
 
 const FETCH_POPULATIONS_REQUEST = "POPULATIONS/FETCH_POPULATIONS_REQUEST";
 const FETCH_POPULATIONS_SUCCESS = "POPULATIONS/FETCH_POPULATIONS_SUCCESS";
@@ -9,4 +9,4 @@ export const fetchPopulations = createAsyncAction(
   FETCH_POPULATIONS_REQUEST,
   FETCH_POPULATIONS_SUCCESS,
   FETCH_POPULATIONS_FAILURE
-)<void, Populations, Error>();
+)<void, DailyCountryData[], Error>();

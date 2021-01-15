@@ -5,7 +5,7 @@ import ResizeObserver from "resize-observer-polyfill";
 import {
   combineChartDimensions,
   Dimensions,
-} from "../utils/combine-chart-dimensions";
+} from "@utils/combine-chart-dimensions";
 
 export const useChartDimensions = (passedSettings: Dimensions) => {
   const [element, setElement] = useState<HTMLElement | null>(null);

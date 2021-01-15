@@ -6,7 +6,7 @@
       "@store/*": ["./store/*"],
       "@hooks/*": ["./hooks/*"],
       "@maps/*": ["./maps/*"],
-      "@types/*": ["./types/*"],
+      "@custom-types/*": ["./custom-types/*"],
       "@utils/*": ["./utils/*"],
     }
   }

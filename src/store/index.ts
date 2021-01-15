@@ -1,10 +1,10 @@
 import { combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { populations } from "./reducers/population";
+import { dailyData } from "./reducers/daily-data";
 
 export const reducers = combineReducers({
-  populations,
+  dailyData,
 });
 
 export type AppState = ReturnType<typeof reducers>;

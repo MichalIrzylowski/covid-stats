@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
+import { DailyCountryData } from "@custom-types/daily-country-data";
+
 import { fetchPopulations } from "./store/reducers/actions";
 import { Map } from "./components/map";
 
@@ -10,14 +12,9 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("https://restcountries.eu/rest/v2/all?fields=name;population")
-      .then((res: any) => {
-        const countriesData: Record<string, number> = {};
-        res.data.forEach(({ name, population }: any) => {
-          countriesData[name] = population;
-        });
-
-        dispatch(fetchPopulations.success(countriesData));
+      .get("https://disease.sh/v3/covid-19/countries")
+      .then((res: { data: DailyCountryData[] }) => {
+        dispatch(fetchPopulations.success(res.data));
       })
       .catch((err) => dispatch(fetchPopulations.failure(err)));
   });

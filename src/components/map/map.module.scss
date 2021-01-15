@@ -1,6 +1,6 @@
-.map-wrapper {
-  margin: 0 auto;
-  display: block;
+.wrapper {
+  display: flex;
+  justify-content: center;
 }
 
 .earth {
@@ -13,6 +13,8 @@
   stroke-width: 1px;
 }
 
-.country:hover {
-  cursor: pointer;
+.country {
+  &:hover {
+    cursor: pointer;
+  }
 }

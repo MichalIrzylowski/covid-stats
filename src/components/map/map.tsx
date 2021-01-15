@@ -1,5 +1,5 @@
-import React, { useMemo, useEffect, useState } from "react";
-import axios from "axios";
+import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import {
   geoEqualEarth,
   GeoSphere,
@@ -10,14 +10,12 @@ import {
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 
-import { Popover } from "antd";
+import { useChartDimensions } from "@hooks/use-chart-dimensions";
+import { Dimensions } from "@utils/combine-chart-dimensions";
 
-import { useChartDimensions } from "../../hooks/use-chart-dimensions";
-import { Dimensions } from "../../utils/combine-chart-dimensions";
+import data from "@maps/world-geojson.json";
 
-import data from "../../maps/world-geojson.json";
-
-import "./map.css";
+import css from "./map.module.scss";
 
 const defaultMap = data;
 
@@ -37,13 +35,7 @@ export const Map: React.FC<MapProps> = ({
   boundedWidth,
   ...chartDimensions
 }) => {
-  const [covidData, setData] = useState<any>();
-
-  useEffect(() => {
-    axios.get("https://disease.sh/v3/covid-19/countries").then((res: any) => {
-      setData(res.data);
-    });
-  }, []);
+  const { data: covidData, loading } = useSelector((state) => state.dailyData);
 
   const minAndMaxCases = useMemo(
     () =>
@@ -54,12 +46,10 @@ export const Map: React.FC<MapProps> = ({
   const colorScale = useMemo(
     () =>
       scaleLinear()
-        .domain(minAndMaxCases as any)
+        .domain(minAndMaxCases)
         .range(["white", "red", "black"] as any),
     [minAndMaxCases]
   );
-
-  console.log(minAndMaxCases);
 
   const projection = useMemo(
     () => geoEqualEarth().fitWidth(chartDimensions.width - 80, sphere),
@@ -76,43 +66,54 @@ export const Map: React.FC<MapProps> = ({
   ]);
   const { setElement, dimensions } = useChartDimensions(chartDimensions);
 
+  const handleClick = (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {
+    const dataJSON = e.currentTarget.getAttribute("data-country-stats");
+    const countryData = dataJSON && JSON.parse(dataJSON);
+
+    console.log(countryData);
+  };
+
   const countries = map.features.map((country: any) => {
     if (!covidData) return undefined;
 
-    const countryName = countryNameAccessor(country);
+    let countryName = countryNameAccessor(country);
+    if (countryName === "United States of America") countryName = "USA";
+    else if (countryName === "Libya") countryName = "Libyan Arab Jamahiriya";
+    else if (countryName === "S. Sudan") countryName = "South Sudan";
+    else if (countryName === "United Kingdom") countryName = "UK";
 
     const countryData = covidData.find(
-      (d: any) => covidDataCountryAccessor(d) === countryName
+      (d) => covidDataCountryAccessor(d) === countryName
     );
 
     const color = countryData
-      ? colorScale(todayCasesPerOneMillionAccessor(countryData) as number)
+      ? colorScale(todayCasesPerOneMillionAccessor(countryData))
       : "grey";
 
     return (
-      <Popover title={countryName}>
-        <path
-          key={countryName}
-          className="country"
-          d={pathGenerator(country as GeoPermissibleObjects) as string}
-          fill={color as string}
-        />
-      </Popover>
+      <path
+        key={countryName}
+        className={css.country}
+        d={pathGenerator(country as GeoPermissibleObjects) as string}
+        fill={color as string}
+        data-country-stats={JSON.stringify(countryData)}
+        onMouseEnter={handleClick}
+      />
     );
   });
 
-  if (!covidData) return null;
+  if (!covidData || loading) return null;
 
   return (
-    <div ref={setElement}>
-      <svg width={dimensions.width} height={y1 + 40} className="map-wrapper">
+    <div ref={setElement} className={css.wrapper}>
+      <svg width={dimensions.width} height={y1 + 40}>
         <g
           style={{
             transform: `translate(${dimensions.marginLeft}px, ${dimensions.marginTop}px)`,
           }}
         >
-          <path className="earth" d={earthPath as string} />
-          <path className="graticule" d={graticulePath as string} />
+          <path className={css.earth} d={earthPath as string} />
+          <path className={css.graticule} d={graticulePath as string} />
           {countries}
         </g>
       </svg>

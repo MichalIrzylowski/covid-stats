@@ -1,19 +1,12 @@
-const CracoAlias = require("craco-alias");
-// const WebpackBar = require("webpackbar");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = {
   plugins: [
     {
-      plugin: CracoAlias,
-      options: {
-        baseUrl: "./",
-        aliases: {
-          "@components/*": "./components/*",
-          "@store/*": "./store/*",
-          "@hooks/*": "./hooks/*",
-          "@maps/*": "./maps/*",
-          "@types/*": "./types/*",
-          "@utils/*": "./utils/*",
+      plugin: {
+        overrideWebpackConfig: ({ webpackConfig }) => {
+          webpackConfig.resolve.plugins.push(new TsconfigPathsPlugin({}));
+          return webpackConfig;
         },
       },
     },
