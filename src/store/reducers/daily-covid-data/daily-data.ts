@@ -18,12 +18,12 @@ const initialState: PopulationsState = {
 };
 
 export const dailyData = createReducer<PopulationsState, Actions>(initialState)
-  .handleAction(actions.fetchPopulations.success, (state, action) => ({
+  .handleAction(actions.fetchDailyCovidData.success, (state, action) => ({
     ...state,
     loading: false,
     data: action.payload,
   }))
-  .handleAction(actions.fetchPopulations.failure, (state, action) => ({
+  .handleAction(actions.fetchDailyCovidData.failure, (state, action) => ({
     ...state,
     loading: false,
     error: action.payload,

@@ -4,8 +4,12 @@ import axios from "axios";
 
 import { DailyCountryData } from "@custom-types/daily-country-data";
 
-import { fetchPopulations } from "./store/reducers/actions";
-import { Map } from "./components/map";
+import { fetchDailyCovidData } from "@store/reducers/daily-covid-data/actions";
+import { setSelectedCountry } from "@store/reducers/selected-country/actions";
+
+import { MapWrapper } from "@components/map-wrapper";
+
+import css from "./app.module.scss";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -14,10 +18,23 @@ export const App: React.FC = () => {
     axios
       .get("https://disease.sh/v3/covid-19/countries")
       .then((res: { data: DailyCountryData[] }) => {
-        dispatch(fetchPopulations.success(res.data));
+        dispatch(fetchDailyCovidData.success(res.data));
+
+        const initialSelectedCountry = res.data.find(
+          (country) => country.country === "USA"
+        );
+        if (initialSelectedCountry)
+          dispatch(setSelectedCountry(initialSelectedCountry));
       })
-      .catch((err) => dispatch(fetchPopulations.failure(err)));
+      .catch((err) => dispatch(fetchDailyCovidData.failure(err)));
   });
 
-  return <Map width={1200} height={0} />;
+  return (
+    <div className={css.wrapper}>
+      <h1>World covid stats</h1>
+      <div className={css.grid}>
+        <MapWrapper />
+      </div>
+    </div>
+  );
 };
