@@ -1,0 +1,19 @@
+.selected-country {
+  grid-column: 9 / 12;
+
+  ul {
+    list-style-type: none;
+
+    li {
+      margin: 10px 0;
+
+      &:first-of-type {
+        margin-top: 20px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

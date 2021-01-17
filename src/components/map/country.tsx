@@ -21,7 +21,7 @@ export const Country: React.FC<CountryProps> = ({
       d={d}
       data-country-stats={dataCountryStats}
       fill={color}
-      onMouseEnter={onClick}
+      onClick={onClick}
     />
   );
 };

@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   geoEqualEarth,
   GeoSphere,
@@ -12,6 +12,7 @@ import { scaleLinear } from "d3-scale";
 
 import { useChartDimensions } from "@hooks/use-chart-dimensions";
 import { Dimensions } from "@utils/combine-chart-dimensions";
+import { setSelectedCountry } from "@store/reducers/selected-country/actions";
 
 import data from "@maps/world-geojson.json";
 
@@ -37,6 +38,7 @@ export const Map: React.FC<MapProps> = ({
   ...chartDimensions
 }) => {
   const { data: covidData, loading } = useSelector((state) => state.dailyData);
+  const dispatch = useDispatch();
 
   const minAndMaxCases = useMemo(
     () =>
@@ -72,23 +74,28 @@ export const Map: React.FC<MapProps> = ({
       const dataJSON = e.currentTarget.getAttribute("data-country-stats");
       const countryData = dataJSON && JSON.parse(dataJSON);
 
-      console.log(countryData);
+      dispatch(setSelectedCountry(countryData));
     },
-    []
+    [dispatch]
   );
 
   const countries = map.features.map((country: any) => {
     if (!covidData) return undefined;
 
     let countryName = countryNameAccessor(country);
+    // TODO: make a function for every country that is not visible
     if (countryName === "United States of America") countryName = "USA";
     else if (countryName === "Libya") countryName = "Libyan Arab Jamahiriya";
     else if (countryName === "S. Sudan") countryName = "South Sudan";
     else if (countryName === "United Kingdom") countryName = "UK";
+    else if (countryName === "Vatican")
+      countryName = "Holy See (Vatican City State)";
 
     const countryData = covidData.find(
       (d) => covidDataCountryAccessor(d) === countryName
     );
+
+    if (!countryData) console.log(countryName);
 
     const color = countryData
       ? colorScale(todayCasesPerOneMillionAccessor(countryData))
