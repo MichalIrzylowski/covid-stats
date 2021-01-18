@@ -58,6 +58,7 @@ export const Map: React.FC<MapProps> = ({
     () => geoEqualEarth().fitWidth(chartDimensions.width, sphere),
     [chartDimensions.width]
   );
+
   const pathGenerator = useMemo(() => geoPath(projection), [projection]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [[x0, y0], [x1, y1]] = useMemo(() => pathGenerator.bounds(sphere), [
@@ -95,8 +96,6 @@ export const Map: React.FC<MapProps> = ({
       (d) => covidDataCountryAccessor(d) === countryName
     );
 
-    if (!countryData) console.log(countryName);
-
     const color = countryData
       ? colorScale(todayCasesPerOneMillionAccessor(countryData))
       : "grey";
@@ -115,7 +114,7 @@ export const Map: React.FC<MapProps> = ({
   if (!covidData || loading) return null;
 
   return (
-    <div ref={setElement}>
+    <div ref={setElement} className={css.wrapper}>
       <svg width={dimensions.width} height={y1}>
         <g>
           <path className={css.earth} d={earthPath as string} />
