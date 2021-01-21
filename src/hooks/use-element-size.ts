@@ -16,6 +16,10 @@ export const useElementSize = () => {
     });
 
     if (element) observer.observe(element);
+
+    return () => {
+      if (element) observer.unobserve(element);
+    };
   }, [element]);
 
   return {

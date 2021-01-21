@@ -11,8 +11,9 @@ import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 
 import { useChartDimensions } from "@hooks/use-chart-dimensions";
-import { Dimensions } from "@utils/combine-chart-dimensions";
 import { setSelectedCountry } from "@store/reducers/selected-country/actions";
+
+import { ChartSvg, ChartZoom } from "@components/chart-svg";
 
 import data from "@maps/world-geojson.json";
 
@@ -22,7 +23,7 @@ import css from "./map.module.scss";
 
 const defaultMap = data;
 
-interface MapProps extends Dimensions {
+interface MapProps {
   map?: any;
 }
 
@@ -32,13 +33,10 @@ const covidDataCountryAccessor = (d: any) => d.country;
 
 const sphere: GeoSphere = { type: "Sphere" };
 
-export const Map: React.FC<MapProps> = ({
-  map = defaultMap,
-  boundedWidth,
-  ...chartDimensions
-}) => {
+export const Map: React.FC<MapProps> = ({ map = defaultMap }) => {
   const { data: covidData, loading } = useSelector((state) => state.dailyData);
   const dispatch = useDispatch();
+  const { setElement, dimensions } = useChartDimensions();
 
   const minAndMaxCases = useMemo(
     () =>
@@ -55,8 +53,8 @@ export const Map: React.FC<MapProps> = ({
   );
 
   const projection = useMemo(
-    () => geoEqualEarth().fitWidth(chartDimensions.width, sphere),
-    [chartDimensions.width]
+    () => geoEqualEarth().fitWidth(dimensions.width, sphere),
+    [dimensions.width]
   );
 
   const pathGenerator = useMemo(() => geoPath(projection), [projection]);
@@ -68,7 +66,6 @@ export const Map: React.FC<MapProps> = ({
   const graticulePath = useMemo(() => pathGenerator(geoGraticule10()), [
     pathGenerator,
   ]);
-  const { setElement, dimensions } = useChartDimensions(chartDimensions);
 
   const handleClick = useCallback(
     (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {
@@ -115,13 +112,13 @@ export const Map: React.FC<MapProps> = ({
 
   return (
     <div ref={setElement} className={css.wrapper}>
-      <svg width={dimensions.width} height={y1}>
-        <g>
+      <ChartSvg width={dimensions.width} height={y1}>
+        <ChartZoom>
           <path className={css.earth} d={earthPath as string} />
           <path className={css.graticule} d={graticulePath as string} />
           {countries}
-        </g>
-      </svg>
+        </ChartZoom>
+      </ChartSvg>
     </div>
   );
 };

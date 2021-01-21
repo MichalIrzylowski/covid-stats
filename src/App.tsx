@@ -7,7 +7,7 @@ import { DailyCountryData } from "@custom-types/daily-country-data";
 import { fetchDailyCovidData } from "@store/reducers/daily-covid-data/actions";
 import { setSelectedCountry } from "@store/reducers/selected-country/actions";
 
-import { MapWrapper } from "@components/map-wrapper";
+import { Map } from "@components/map";
 import { SelectedCountry } from "@components/selected-country";
 
 import css from "./app.module.scss";
@@ -34,7 +34,7 @@ export const App: React.FC = () => {
     <div className={css.wrapper}>
       <h1>World covid stats</h1>
       <div className={css.grid}>
-        <MapWrapper />
+        <Map />
         <SelectedCountry />
       </div>
     </div>
