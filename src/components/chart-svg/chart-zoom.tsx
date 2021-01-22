@@ -17,7 +17,6 @@ export const ChartZoom: React.FC = ({ children }) => {
     if (!svg) return;
 
     const svgElement = select(svg);
-    console.log(svgElement);
     const zoomAction = zoom().on(
       "zoom",
       (event: ZoomBehavior<SVGElement, "wheel">) => {
@@ -31,5 +30,9 @@ export const ChartZoom: React.FC = ({ children }) => {
   const transform =
     x && y && k ? `translate(${x}, ${y}) scale(${k})` : undefined;
 
-  return <g transform={transform}>{children}</g>;
+  return (
+    <g transform={transform} cursor="grab">
+      {children}
+    </g>
+  );
 };
