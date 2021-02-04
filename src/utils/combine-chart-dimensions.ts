@@ -5,14 +5,12 @@ export type Dimensions = {
   marginRight?: number;
   marginBottom?: number;
   marginLeft?: number;
-  boundedWidth?: number;
-  boundedHeight?: number;
 };
 
 export const combineChartDimensions = (dimensions: Dimensions) => {
   const parsedDimensions = {
     ...dimensions,
-    marginTop: dimensions.marginTop || 10,
+    marginTop: dimensions.marginTop || 20,
     marginRight: dimensions.marginRight || 10,
     marginBottom: dimensions.marginBottom || 40,
     marginLeft: dimensions.marginLeft || 75,

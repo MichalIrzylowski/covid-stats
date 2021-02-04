@@ -13,7 +13,7 @@ import { scaleLinear } from "d3-scale";
 import { useChartDimensions } from "@hooks/use-chart-dimensions";
 import { setSelectedCountry } from "@store/reducers/selected-country/actions";
 
-import { ChartSvg, ChartZoom } from "@components/chart-svg";
+import { ChartSvg, ChartZoom } from "@components/chart-elements";
 
 import data from "@maps/world-geojson.json";
 
@@ -112,7 +112,7 @@ export const Map: React.FC<MapProps> = ({ map = defaultMap }) => {
 
   return (
     <div ref={setElement} className={css.wrapper}>
-      <ChartSvg width={dimensions.width} height={y1}>
+      <ChartSvg {...dimensions} height={y1}>
         <ChartZoom>
           <path className={css.earth} d={earthPath as string} />
           <path className={css.graticule} d={graticulePath as string} />
