@@ -30,12 +30,12 @@ export const LineChartSection = () => {
 
   if (!timelineData) return null;
 
-  const timeLineDataSelected = (timelineData[0][1] as unknown) as CasesData[];
-
   return (
     <div className={css.wrapper}>
       <h2>History of COVID in {country}</h2>
-      <LineChart data={timeLineDataSelected} />
+      {timelineData.map(([title, data]) => (
+        <LineChart data={data as CasesData[]} />
+      ))}
     </div>
   );
 };

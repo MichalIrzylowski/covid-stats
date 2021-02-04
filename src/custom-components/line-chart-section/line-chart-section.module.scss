@@ -3,6 +3,13 @@
   height: 300px;
 }
 
+.charts {
+  display: flex;
+  justify-content: space-between;
+}
+
 .chart {
   height: 100%;
+  display: inline-block;
+  min-width: 30%;
 }
