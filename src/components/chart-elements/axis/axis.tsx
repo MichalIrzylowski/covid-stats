@@ -1,28 +1,20 @@
 import React from "react";
 
-import { timeFormatter } from "@utils/time";
-
 import { AxisHorizontal } from "./axis-horizontal";
 import { AxisVertical } from "./axis-vertical";
-import { Scale } from "./types";
+import { AxisProps as AxisPropsCore } from "./types";
 
 const axisComponentsByDimension = {
   x: AxisHorizontal,
   y: AxisVertical,
 };
 
-interface AxisProps {
+interface AxisProps extends AxisPropsCore {
   dimension: keyof typeof axisComponentsByDimension;
-  scale: Scale;
-  timeFormatter?: ReturnType<typeof timeFormatter>;
 }
 
-export const Axis: React.FC<AxisProps> = ({
-  dimension,
-  scale,
-  timeFormatter,
-}) => {
+export const Axis: React.FC<AxisProps> = ({ dimension, ...axisProps }) => {
   const Component = axisComponentsByDimension[dimension];
 
-  return <Component scale={scale} timeFormatter={timeFormatter} />;
+  return <Component {...axisProps} />;
 };

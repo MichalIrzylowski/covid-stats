@@ -7,4 +7,5 @@ export type Scale = ScaleLinear<any, any, any>;
 export interface AxisProps {
   scale: Scale;
   timeFormatter?: ReturnType<typeof timeFormatter>;
+  numberOfTicks?: number;
 }

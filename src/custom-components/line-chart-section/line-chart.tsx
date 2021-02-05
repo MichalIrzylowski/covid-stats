@@ -5,6 +5,8 @@ import { scaleTime, scaleLinear } from "d3-scale";
 import { useChartDimensions } from "@hooks/use-chart-dimensions";
 import { LineChart as LineChartCore } from "@components/charts/line-chart";
 
+import { timeFormatter } from "@utils/time";
+
 import css from "./line-chart-section.module.scss";
 
 export type CasesData = [Date, number];
@@ -24,11 +26,18 @@ export const LineChart: React.FC<LineChartProps> = ({ data }) => {
 
   const xScale = scaleTime()
     .domain(timeData)
-    .range([0, dimensions.boundedWidth]);
+    .range([0, dimensions.boundedWidth])
+    .nice();
 
   const yScale = scaleLinear()
     .domain(casesData)
-    .range([dimensions.boundedHeight, 0]);
+    .range([dimensions.boundedHeight, 0])
+    .nice();
+
+  const numberOfTicks =
+    dimensions.boundedWidth < 600
+      ? dimensions.boundedWidth / 100
+      : dimensions.boundedWidth / 250;
 
   return (
     <div className={css.chart} ref={setElement}>
@@ -39,6 +48,8 @@ export const LineChart: React.FC<LineChartProps> = ({ data }) => {
         yScale={yScale}
         xAccessor={timeAccessor}
         yAccessor={casesAccessor}
+        horizontalTimeFormatter={timeFormatter()}
+        horizontalAxisNumberOfTicks={numberOfTicks}
       />
     </div>
   );

@@ -3,29 +3,24 @@ import { useSvgDimensions } from "../chart-svg";
 
 import { AxisProps } from "./types";
 
-import css from "./axis.module.scss";
-
 export const AxisHorizontal: React.FC<AxisProps> = ({
   scale,
   timeFormatter,
+  numberOfTicks,
 }) => {
   const dimensions = useSvgDimensions();
 
   if (!dimensions) return null;
 
-  const numberOfTicks =
-    dimensions.boundedWidth < 600
-      ? dimensions.boundedWidth / 100
-      : dimensions.boundedWidth / 250;
-
   const ticks = (scale.nice().ticks(numberOfTicks) as unknown) as Date[];
 
   const displayedTicks = ticks.map((tick) => (
     <text
-      className={css.text}
+      fontSize={10}
       key={tick.toString()}
       x={scale(tick)}
-      transform={`translate(-15, 20)`}
+      transform={`translate(0, 20)`}
+      textAnchor="middle"
     >
       {(timeFormatter && timeFormatter(tick)) || tick.toString()}
     </text>
