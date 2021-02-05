@@ -13,13 +13,14 @@ export type CasesData = [Date, number];
 
 interface LineChartProps {
   data: CasesData[];
+  title?: string;
 }
 
 const timeAccessor = (x: CasesData) => x[0];
 const casesAccessor = (y: CasesData) => y[1];
 
-export const LineChart: React.FC<LineChartProps> = ({ data }) => {
-  const { setElement, dimensions } = useChartDimensions();
+export const LineChart: React.FC<LineChartProps> = ({ data, title }) => {
+  const { setElement, dimensions } = useChartDimensions({ marginTop: 50 });
 
   const timeData = extent(data, timeAccessor) as [Date, Date];
   const casesData = extent(data, casesAccessor) as [number, number];
@@ -50,6 +51,9 @@ export const LineChart: React.FC<LineChartProps> = ({ data }) => {
         yAccessor={casesAccessor}
         horizontalTimeFormatter={timeFormatter()}
         horizontalAxisNumberOfTicks={numberOfTicks}
+        title={`${title} in time`}
+        verticalAxisTitle="amount of people"
+        horizontalAxisTitle="date"
       />
     </div>
   );

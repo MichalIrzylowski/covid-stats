@@ -10,6 +10,7 @@ import {
   AxisProps,
   Scale,
   BackgroundNet,
+  Title,
 } from "@components/chart-elements";
 
 interface LineChartProps extends ChartSvgProps {
@@ -22,6 +23,9 @@ interface LineChartProps extends ChartSvgProps {
   verticalTimeFormatter?: AxisProps["timeFormatter"];
   horizontalAxisNumberOfTicks?: AxisProps["numberOfTicks"];
   verticalAxisNumberOfTicks?: AxisProps["numberOfTicks"];
+  title?: string;
+  verticalAxisTitle?: string;
+  horizontalAxisTitle?: string;
 }
 
 export const LineChart: React.FC<LineChartProps> = ({
@@ -34,6 +38,9 @@ export const LineChart: React.FC<LineChartProps> = ({
   verticalTimeFormatter,
   horizontalAxisNumberOfTicks,
   verticalAxisNumberOfTicks,
+  title,
+  verticalAxisTitle,
+  horizontalAxisTitle,
   ...chartSvgProps
 }) => {
   // TODO: find better way to type it
@@ -42,8 +49,13 @@ export const LineChart: React.FC<LineChartProps> = ({
 
   return (
     <ChartSvg {...chartSvgProps}>
+      {title && <Title>{title}</Title>}
       <ChartBounds>
-        <BackgroundNet dimension="horizontal" scale={yScale as Scale} />
+        <BackgroundNet
+          dimension="horizontal"
+          scale={yScale as Scale}
+          numberOfBars={verticalAxisNumberOfTicks}
+        />
         <BackgroundNet
           dimension="vertical"
           scale={xScale as Scale}
@@ -63,12 +75,14 @@ export const LineChart: React.FC<LineChartProps> = ({
           scale={xScale as Scale}
           timeFormatter={horizontalTimeFormatter}
           numberOfTicks={horizontalAxisNumberOfTicks}
+          title={horizontalAxisTitle}
         />
         <Axis
           dimension="y"
           scale={yScale as Scale}
           timeFormatter={verticalTimeFormatter}
           numberOfTicks={verticalAxisNumberOfTicks}
+          title={verticalAxisTitle}
         />
       </ChartBounds>
     </ChartSvg>

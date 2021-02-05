@@ -3,10 +3,13 @@ import { useSvgDimensions } from "../chart-svg";
 
 import { AxisProps } from "./types";
 
+const fontSize = 10;
+
 export const AxisHorizontal: React.FC<AxisProps> = ({
   scale,
   timeFormatter,
   numberOfTicks,
+  title,
 }) => {
   const dimensions = useSvgDimensions();
 
@@ -16,7 +19,7 @@ export const AxisHorizontal: React.FC<AxisProps> = ({
 
   const displayedTicks = ticks.map((tick) => (
     <text
-      fontSize={10}
+      fontSize={fontSize}
       key={tick.toString()}
       x={scale(tick)}
       transform={`translate(0, 20)`}
@@ -40,6 +43,12 @@ export const AxisHorizontal: React.FC<AxisProps> = ({
       <line x2={dimensions.boundedWidth} stroke="#bdc3c7" />
       {smallTicks}
       {displayedTicks}
+      <text
+        fontSize={fontSize}
+        transform={`translate(${dimensions.boundedWidth / 2}, 35)`}
+      >
+        {title}
+      </text>
     </g>
   );
 };

@@ -8,4 +8,5 @@ export interface AxisProps {
   scale: Scale;
   timeFormatter?: ReturnType<typeof timeFormatter>;
   numberOfTicks?: number;
+  title?: string;
 }

@@ -34,7 +34,11 @@ export const LineChartSection = () => {
     <div className={css.wrapper}>
       <h2>History of COVID in {country}</h2>
       {timelineData.map(([title, data]) => (
-        <LineChart data={data as CasesData[]} />
+        <LineChart
+          key={title as string | number}
+          data={data as CasesData[]}
+          title={title as string}
+        />
       ))}
     </div>
   );
