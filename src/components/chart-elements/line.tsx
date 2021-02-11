@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
 import { area, line, CurveFactory } from "d3";
 
+import { animated, useSpring } from "react-spring";
+
 interface LineProps extends React.SVGProps<SVGPathElement> {
   type: "line" | "area";
   // TODO: find better way to type it
@@ -20,6 +22,12 @@ export const Line: React.FC<LineProps> = ({
   y0Accessor,
   ...svgProps
 }) => {
+  const styles = useSpring({
+    strokeDashoffset: 0,
+    from: { strokeDashoffset: 1000 },
+    config: { duration: 2000, tension: 100 },
+    reset: true,
+  });
   const lineGenerator = useMemo(() => {
     if (type === "area") {
       if (!y0Accessor)
@@ -44,5 +52,14 @@ export const Line: React.FC<LineProps> = ({
 
   const path = lineGenerator(data);
 
-  return <path {...svgProps} d={path as string} />;
+  return (
+    <animated.path
+      strokeDashoffset={styles.strokeDashoffset}
+      strokeDasharray="1000"
+      fill="none"
+      d={path as string}
+      stroke={svgProps.stroke}
+      strokeWidth={svgProps.strokeWidth}
+    />
+  );
 };

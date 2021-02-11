@@ -66,7 +66,6 @@ export const LineChart: React.FC<LineChartProps> = ({
           data={data}
           xAccessor={xAccessorScaled}
           yAccessor={yAccessorScaled}
-          fill="none"
           stroke="#9980FA"
           strokeWidth={2}
         />
