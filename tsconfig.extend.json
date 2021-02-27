@@ -9,7 +9,8 @@
       "@custom-types/*": ["./custom-types/*"],
       "@utils/*": ["./utils/*"],
       "@custom-components/*": ["./custom-components/*"],
-      "@pages/*": ["./pages/*"]
+      "@pages/*": ["./pages/*"],
+      "@helpers/*": ["./helpers/*"]
     }
   }
 }
