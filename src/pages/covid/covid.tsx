@@ -12,7 +12,7 @@ import { fetchCountryCovidTimelineData } from "@store/reducers/country-timeline/
 import { Map } from "@components/map";
 import { SelectedCountry } from "@components/selected-country";
 
-import { LineChartSection } from "@custom-components/line-chart-section";
+import { LineChartSection } from "@pages/covid/custom-components/line-chart-section";
 
 import css from "./covid.module.scss";
 

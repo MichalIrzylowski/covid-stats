@@ -28,7 +28,7 @@ const timeStepsDefault = "1d";
 const unit = "metric";
 
 export interface Interval {
-  startTime: string;
+  startTime: Date;
   values: {
     temperature: number;
     temperatureApparent: number;
