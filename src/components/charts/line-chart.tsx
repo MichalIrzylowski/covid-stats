@@ -1,4 +1,5 @@
 import React from "react";
+import { curveMonotoneX } from "d3";
 import { ScaleLinear, ScaleTime } from "d3-scale/index";
 
 import {
@@ -9,7 +10,6 @@ import {
   Axis,
   AxisProps,
   Scale,
-  BackgroundNet,
   Title,
 } from "@components/chart-elements";
 
@@ -26,6 +26,8 @@ interface LineChartProps extends ChartSvgProps {
   title?: string;
   verticalAxisTitle?: string;
   horizontalAxisTitle?: string;
+  xDimensionNet?: boolean;
+  yDimensionNet?: boolean;
 }
 
 export const LineChart: React.FC<LineChartProps> = ({
@@ -41,6 +43,8 @@ export const LineChart: React.FC<LineChartProps> = ({
   title,
   verticalAxisTitle,
   horizontalAxisTitle,
+  xDimensionNet,
+  yDimensionNet,
   ...chartSvgProps
 }) => {
   // TODO: find better way to type it
@@ -51,15 +55,21 @@ export const LineChart: React.FC<LineChartProps> = ({
     <ChartSvg {...chartSvgProps}>
       {title && <Title>{title}</Title>}
       <ChartBounds>
-        <BackgroundNet
-          dimension="horizontal"
-          scale={yScale as Scale}
-          numberOfBars={verticalAxisNumberOfTicks}
-        />
-        <BackgroundNet
-          dimension="vertical"
+        <Axis
+          dimension="x"
           scale={xScale as Scale}
-          numberOfBars={horizontalAxisNumberOfTicks}
+          timeFormatter={horizontalTimeFormatter}
+          numberOfTicks={horizontalAxisNumberOfTicks}
+          title={horizontalAxisTitle}
+          showBigTicks={xDimensionNet}
+        />
+        <Axis
+          dimension="y"
+          scale={yScale as Scale}
+          timeFormatter={verticalTimeFormatter}
+          numberOfTicks={verticalAxisNumberOfTicks}
+          title={verticalAxisTitle}
+          showBigTicks={yDimensionNet}
         />
         <Line
           type="line"
@@ -68,20 +78,7 @@ export const LineChart: React.FC<LineChartProps> = ({
           yAccessor={yAccessorScaled}
           stroke="#9980FA"
           strokeWidth={2}
-        />
-        <Axis
-          dimension="x"
-          scale={xScale as Scale}
-          timeFormatter={horizontalTimeFormatter}
-          numberOfTicks={horizontalAxisNumberOfTicks}
-          title={horizontalAxisTitle}
-        />
-        <Axis
-          dimension="y"
-          scale={yScale as Scale}
-          timeFormatter={verticalTimeFormatter}
-          numberOfTicks={verticalAxisNumberOfTicks}
-          title={verticalAxisTitle}
+          curve={curveMonotoneX}
         />
       </ChartBounds>
     </ChartSvg>

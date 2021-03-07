@@ -13,8 +13,12 @@ interface AxisProps extends AxisPropsCore {
   dimension: keyof typeof axisComponentsByDimension;
 }
 
-export const Axis: React.FC<AxisProps> = ({ dimension, ...axisProps }) => {
+export const Axis: React.FC<AxisProps> = ({
+  dimension,
+  showBigTicks = true,
+  ...axisProps
+}) => {
   const Component = axisComponentsByDimension[dimension];
 
-  return <Component {...axisProps} />;
+  return <Component showBigTicks={showBigTicks} {...axisProps} />;
 };

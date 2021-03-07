@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { area, line, CurveFactory } from "d3";
 
 import { animated, useSpring } from "react-spring";
+import { useSvgDimensions } from "./chart-svg";
 
 interface LineProps extends React.SVGProps<SVGPathElement> {
   type: "line" | "area";
@@ -22,12 +23,7 @@ export const Line: React.FC<LineProps> = ({
   y0Accessor,
   ...svgProps
 }) => {
-  const styles = useSpring({
-    strokeDashoffset: 0,
-    from: { strokeDashoffset: 1000 },
-    config: { duration: 2000, tension: 100 },
-    reset: true,
-  });
+  const dimensions = useSvgDimensions();
   const lineGenerator = useMemo(() => {
     if (type === "area") {
       if (!y0Accessor)
@@ -51,11 +47,21 @@ export const Line: React.FC<LineProps> = ({
   }, [curve, xAccessor, yAccessor, type, y0Accessor]);
 
   const path = lineGenerator(data);
+  const lineWidth = (dimensions && dimensions.boundedWidth * 2) || 1000;
+
+  const styles = useSpring({
+    strokeDashoffset: 0,
+    from: {
+      strokeDashoffset: lineWidth,
+    },
+    config: { duration: 4000, tension: 100 },
+    reset: true,
+  });
 
   return (
     <animated.path
       strokeDashoffset={styles.strokeDashoffset}
-      strokeDasharray="1000"
+      strokeDasharray={`${lineWidth} ${lineWidth}`}
       fill="none"
       d={path as string}
       stroke={svgProps.stroke}

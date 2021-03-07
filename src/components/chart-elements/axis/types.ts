@@ -9,4 +9,5 @@ export interface AxisProps {
   timeFormatter?: ReturnType<typeof timeFormatter>;
   numberOfTicks?: number;
   title?: string;
+  showBigTicks?: boolean;
 }

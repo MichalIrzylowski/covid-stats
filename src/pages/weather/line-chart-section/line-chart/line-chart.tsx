@@ -19,7 +19,10 @@ const timeAccessor = (el: Interval) => new Date(el.startTime).getTime();
 const tempAccessor = (el: Interval) => el.values.temperature;
 
 export const LineChart: React.FC<LineChartProps> = ({ data }) => {
-  const { setElement, dimensions } = useChartDimensions({ marginRight: 40 });
+  const { setElement, dimensions } = useChartDimensions({
+    marginRight: 40,
+    marginTop: 50,
+  });
 
   const timeExtent = (extent(data, timeAccessor) as unknown) as [Date, Date];
   const tempExtent = extent(data, tempAccessor) as [Number, Number];
@@ -38,12 +41,14 @@ export const LineChart: React.FC<LineChartProps> = ({ data }) => {
       <LineChartCore
         {...dimensions}
         horizontalTimeFormatter={timeFormatter()}
-        verticalAxisNumberOfTicks={5}
         data={data}
         xAccessor={timeAccessor}
         yAccessor={tempAccessor}
         xScale={xScale}
         yScale={yScale}
+        title="Temperature in time"
+        verticalAxisTitle="Temperature"
+        horizontalAxisTitle="Date"
       />
     </div>
   );

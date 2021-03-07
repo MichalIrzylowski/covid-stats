@@ -9,6 +9,7 @@ export const AxisVertical: React.FC<AxisProps> = ({
   scale,
   timeFormatter,
   title,
+  showBigTicks,
 }) => {
   const dimensions = useSvgDimensions();
 
@@ -39,11 +40,23 @@ export const AxisVertical: React.FC<AxisProps> = ({
     />
   ));
 
+  const bigTicks =
+    showBigTicks &&
+    ticks.map((tick) => (
+      <line
+        x2={dimensions.boundedWidth}
+        stroke="rgba(230, 230, 230, 0.9)"
+        transform={`translate(0, ${scale(tick)})`}
+        key={tick.toString()}
+      />
+    ));
+
   return (
     <g>
       <line y2={dimensions.boundedHeight} stroke="#bdc3c7" />
       {smallTicks}
       {displayedTicks}
+      {bigTicks}
       <text
         fontSize={fontSize}
         transform={`translate(-50, ${
