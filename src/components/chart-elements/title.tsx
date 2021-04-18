@@ -8,8 +8,6 @@ interface TitleProps {
 export const Title: React.FC<TitleProps> = ({ children }) => {
   const dimensions = useSvgDimensions();
 
-  if (!dimensions) return null;
-
   return (
     <text
       textAnchor="middle"

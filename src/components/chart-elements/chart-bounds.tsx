@@ -7,8 +7,6 @@ export const ChartBounds: React.FC<React.SVGProps<SVGGElement>> = ({
 }) => {
   const dimensions = useSvgDimensions();
 
-  if (!dimensions) return null;
-
   return (
     <g
       {...gElementProps}
