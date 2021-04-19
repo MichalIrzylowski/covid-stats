@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { weatherApiCall } from "@helpers/weather-api-call";
 import { fetchWeatherTimelineData } from "@store/reducers/weather-timeline/actions";
 
+import { LineChart } from "@components/charts/line-chart/line-chart";
+
 import { LineChartSection } from "./line-chart-section";
 
 export const Weather: React.FC = () => {
@@ -29,6 +31,7 @@ export const Weather: React.FC = () => {
       <h1>Weather data</h1>
       {weatherTimeline.loading && "Loading"}
       {!weatherTimeline.loading && <LineChartSection />}
+      <LineChart data={[{ x: 1, y: 2 }]} />
     </>
   );
 };
