@@ -16,9 +16,9 @@ export const AxisHorizontal: React.FC<AxisProps> = ({
 
   if (!dimensions) return null;
 
-  const ticks = (scale.nice().ticks(numberOfTicks) as unknown) as Date[];
+  const ticks = scale.ticks(numberOfTicks) as any[];
 
-  const displayedTicks = ticks.map((tick) => (
+  const displayedTicks = ticks.map((tick: any) => (
     <text
       fontSize={fontSize}
       key={tick.toString()}
@@ -30,7 +30,7 @@ export const AxisHorizontal: React.FC<AxisProps> = ({
     </text>
   ));
 
-  const smallTicks = ticks.map((tick) => (
+  const smallTicks = ticks.map((tick: any) => (
     <line
       y2={5}
       stroke="#bdc3c7"
@@ -41,7 +41,7 @@ export const AxisHorizontal: React.FC<AxisProps> = ({
 
   const bigTicks =
     showBigTicks &&
-    ticks.map((tick) => (
+    ticks.map((tick: any) => (
       <line
         y2={-dimensions.boundedHeight}
         stroke="rgba(230, 230, 230, 0.9)"

@@ -1,8 +1,10 @@
-import { ScaleLinear } from "d3-scale";
+import { ScaleLinear, ScaleTime } from "d3-scale";
 
 import { timeFormatter } from "@utils/time";
 
-export type Scale = ScaleLinear<any, any, any>;
+export type Scale =
+  | ScaleTime<number, number, never>
+  | ScaleLinear<number, number, never>;
 
 export interface AxisProps {
   scale: Scale;
