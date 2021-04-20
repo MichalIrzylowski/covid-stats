@@ -13,6 +13,8 @@ export const AxisVertical: React.FC<AxisProps> = ({
 }) => {
   const dimensions = useSvgDimensions();
 
+  if (!dimensions) return null;
+
   const ticks = (scale.ticks() as unknown) as Date[];
 
   const displayedTicks = ticks.map((tick) => {

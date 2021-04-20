@@ -47,7 +47,7 @@ export const Line: React.FC<LineProps> = ({
   }, [curve, xAccessor, yAccessor, type, y0Accessor]);
 
   const path = lineGenerator(data);
-  const lineWidth = dimensions.boundedWidth * 2 || 1000;
+  const lineWidth = (dimensions && dimensions.boundedWidth * 2) || 1000;
 
   const styles = useSpring({
     strokeDashoffset: 0,

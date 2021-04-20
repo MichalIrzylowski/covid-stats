@@ -14,6 +14,8 @@ export const AxisHorizontal: React.FC<AxisProps> = ({
 }) => {
   const dimensions = useSvgDimensions();
 
+  if (!dimensions) return null;
+
   const ticks = (scale.nice().ticks(numberOfTicks) as unknown) as Date[];
 
   const displayedTicks = ticks.map((tick) => (
