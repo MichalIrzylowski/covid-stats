@@ -19,7 +19,7 @@ export const AxisVertical: React.FC<AxisProps> = ({
 
   if (!dimensions) return null;
 
-  const ticks = (scale.ticks() as unknown) as Date[];
+  const ticks = (scale.ticks(numberOfTicks) as unknown) as Date[];
 
   const displayedTicks = ticks.map((tick) => {
     const text =

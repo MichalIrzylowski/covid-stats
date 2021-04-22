@@ -6,8 +6,6 @@ import { fetchWeatherTimelineData } from "@store/reducers/weather-timeline/actio
 
 import { LineChart } from "@components/charts/line-chart/line-chart";
 
-import { LineChartSection } from "./line-chart-section";
-
 export const Weather: React.FC = () => {
   const dispatch = useDispatch();
   const weatherTimeline = useSelector((state) => state.weatherTimeline);
@@ -30,7 +28,6 @@ export const Weather: React.FC = () => {
     <>
       <h1>Weather data</h1>
       {weatherTimeline.loading && "Loading"}
-      {!weatherTimeline.loading && <LineChartSection />}
       {!weatherTimeline.loading && (
         <LineChart
           data={weatherTimeline.timeline}

@@ -22,18 +22,23 @@ export const AxisHorizontal: React.FC<AxisProps> = ({
 
   const ticks = scale.ticks(numberOfTicks) as any[];
 
-  const displayedTicks = ticks.map((tick: any) => (
-    <text
-      fontSize={fontSize}
-      key={tick.toString()}
-      x={scale(tick)}
-      transform={`translate(0, 20)`}
-      textAnchor="middle"
-    >
-      {(scaleType === "time" && timeFormatter(dateFormat)(tick)) ||
-        tick.toString()}
-    </text>
-  ));
+  const displayedTicks = ticks.map((tick: any) => {
+    const axisText =
+      (scaleType === "time" && timeFormatter(dateFormat)(tick)) ||
+      tick.toString();
+
+    return (
+      <text
+        fontSize={fontSize}
+        key={tick.toString()}
+        x={scale(tick)}
+        transform={`translate(0, 20)`}
+        textAnchor="middle"
+      >
+        {axisText}
+      </text>
+    );
+  });
 
   const smallTicks = ticks.map((tick: any) => (
     <line

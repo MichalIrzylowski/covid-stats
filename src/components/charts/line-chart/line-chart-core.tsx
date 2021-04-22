@@ -17,6 +17,10 @@ export const LineChartCore = ({
   yScaleType,
   niceXScale = true,
   niceYScale = true,
+  xNumberOfTicks,
+  yNumberOfTicks,
+  showXNet,
+  showYNet,
   ...svgProps
 }: LineChartProps & SimpleData & ChartSvgProps) => {
   const xScale = generateScale(
@@ -33,8 +37,20 @@ export const LineChartCore = ({
   return (
     <ChartSvg {...svgProps}>
       <ChartBounds>
-        <Axis dimension="x" scale={niceXScale ? xScale.nice() : xScale} />
-        <Axis dimension="y" scale={niceYScale ? yScale.nice() : yScale} />
+        <Axis
+          scaleType={xScaleType}
+          dimension="x"
+          scale={niceXScale ? xScale.nice() : xScale}
+          numberOfTicks={xNumberOfTicks}
+          showBigTicks={showXNet}
+        />
+        <Axis
+          scaleType={yScaleType}
+          dimension="y"
+          scale={niceYScale ? yScale.nice() : yScale}
+          numberOfTicks={yNumberOfTicks}
+          showBigTicks={showYNet}
+        />
         <Line
           data={data}
           xAccessor={(d) => xScale(d.x as number)}

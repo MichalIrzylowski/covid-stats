@@ -14,10 +14,19 @@ export interface ComplexData<D> {
   yAccessor: (data: D) => DataType;
 }
 
+export interface ChartSize {
+  height?: number | string;
+  width?: number | string;
+}
+
 export type Data<D> = ComplexData<D> | SimpleData;
 export interface LineChartProps {
   xScaleType?: Scale;
   yScaleType?: Scale;
   niceXScale?: boolean;
   niceYScale?: boolean;
+  xNumberOfTicks?: number;
+  yNumberOfTicks?: number;
+  showXNet?: boolean;
+  showYNet?: boolean;
 }
