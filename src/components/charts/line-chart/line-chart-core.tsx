@@ -8,7 +8,7 @@ import {
   Line,
 } from "@components/chart-elements";
 
-import { generateScale } from "./helpers/generate-scale";
+import { generateScale } from "@utils/generate-scale";
 import { LineChartProps, SimpleData } from "./types";
 
 export const LineChartCore = ({
@@ -25,16 +25,24 @@ export const LineChartCore = ({
     [0, svgProps.boundedWidth]
   );
   const yScale = generateScale(
-    xScaleType,
+    yScaleType,
     data.map((d) => d.y),
-    [0, svgProps.boundedHeight]
+    [svgProps.boundedHeight, 0]
   );
 
   return (
     <ChartSvg {...svgProps}>
       <ChartBounds>
         <Axis dimension="x" scale={niceXScale ? xScale.nice() : xScale} />
-        <Axis dimension="y" scale={niceYScale ? yScale.nice() : xScale} />
+        <Axis dimension="y" scale={niceYScale ? yScale.nice() : yScale} />
+        <Line
+          data={data}
+          xAccessor={(d) => xScale(d.x as number)}
+          yAccessor={(d) => yScale(d.y as number)}
+          type="line"
+          stroke="#9980FA"
+          strokeWidth={2}
+        />
       </ChartBounds>
     </ChartSvg>
   );

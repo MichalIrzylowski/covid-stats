@@ -1,6 +1,8 @@
 import { ScaleLinear, ScaleTime } from "d3-scale";
 
-import { timeFormatter } from "@utils/time";
+import { Scale as ScaleType } from "@utils/generate-scale";
+
+export type DateFormat = "%Y-%m-%d";
 
 export type Scale =
   | ScaleTime<number, number, never>
@@ -8,7 +10,8 @@ export type Scale =
 
 export interface AxisProps {
   scale: Scale;
-  timeFormatter?: ReturnType<typeof timeFormatter>;
+  scaleType?: ScaleType;
+  dateFormat?: DateFormat;
   numberOfTicks?: number;
   title?: string;
   showBigTicks?: boolean;

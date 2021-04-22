@@ -1,7 +1,7 @@
-import * as scales from "d3-scale";
 import { extent } from "d3-array";
+import * as scales from "d3-scale";
 
-import { DataType } from "../types";
+import { DataType } from "../components/charts/line-chart/types";
 
 export type Scale = "linear" | "time";
 

@@ -31,14 +31,14 @@ export const Weather: React.FC = () => {
       <h1>Weather data</h1>
       {weatherTimeline.loading && "Loading"}
       {!weatherTimeline.loading && <LineChartSection />}
-      <LineChart
-        data={[
-          { x: 1, y: 2 },
-          { x: 2, y: 3 },
-          { x: 3, y: 4 },
-          { x: 4, y: 2 },
-        ]}
-      />
+      {!weatherTimeline.loading && (
+        <LineChart
+          data={weatherTimeline.timeline}
+          xAccessor={(d) => new Date(d.startTime)}
+          yAccessor={(d) => d.values.temperature}
+          xScaleType="time"
+        />
+      )}
     </>
   );
 };

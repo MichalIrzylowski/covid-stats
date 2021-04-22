@@ -1,13 +1,10 @@
 import React from "react";
-import { extent } from "d3";
-import { scaleTime, scaleLinear } from "d3-scale";
 
 import { useChartDimensions } from "@hooks/use-chart-dimensions";
 
 import { LineChart as LineChartCore } from "@components/charts";
 
 import { Interval } from "@helpers/weather-api-call";
-import { timeFormatter } from "@utils/time";
 
 import css from "./line-chart.module.scss";
 
@@ -24,31 +21,13 @@ export const LineChart: React.FC<LineChartProps> = ({ data }) => {
     marginTop: 50,
   });
 
-  const timeExtent = (extent(data, timeAccessor) as unknown) as [Date, Date];
-  const tempExtent = extent(data, tempAccessor) as [Number, Number];
-
-  const xScale = scaleTime()
-    .domain(timeExtent)
-    .range([0, dimensions.boundedWidth])
-    .nice();
-  const yScale = scaleLinear()
-    .domain(tempExtent)
-    .range([dimensions.boundedHeight, 0])
-    .nice();
-
   return (
     <div className={css.chart} ref={setElement}>
       <LineChartCore
         {...dimensions}
-        horizontalTimeFormatter={timeFormatter()}
         data={data}
         xAccessor={timeAccessor}
         yAccessor={tempAccessor}
-        xScale={xScale}
-        yScale={yScale}
-        title="Temperature in time"
-        verticalAxisTitle="Temperature"
-        horizontalAxisTitle="Date"
       />
     </div>
   );

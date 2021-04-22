@@ -1,13 +1,17 @@
 import React from "react";
 import { useSvgDimensions } from "../chart-svg";
 
+import { timeFormatter } from "@utils/time";
+
 import { AxisProps } from "./types";
 
 const fontSize = 10;
 
 export const AxisVertical: React.FC<AxisProps> = ({
   scale,
-  timeFormatter,
+  dateFormat,
+  scaleType,
+  numberOfTicks,
   title,
   showBigTicks,
 }) => {
@@ -18,7 +22,9 @@ export const AxisVertical: React.FC<AxisProps> = ({
   const ticks = (scale.ticks() as unknown) as Date[];
 
   const displayedTicks = ticks.map((tick) => {
-    const text = (timeFormatter && timeFormatter(tick)) || tick.toString();
+    const text =
+      (scaleType === "time" && timeFormatter(dateFormat)(tick)) ||
+      tick.toString();
     return (
       <text
         fontSize={fontSize}

@@ -4,17 +4,17 @@ import { area, line, CurveFactory } from "d3";
 import { animated, useSpring } from "react-spring";
 import { useSvgDimensions } from "./chart-svg";
 
-interface LineProps extends React.SVGProps<SVGPathElement> {
+interface LineProps<D> extends React.SVGProps<SVGPathElement> {
   type: "line" | "area";
   // TODO: find better way to type it
-  data: any;
-  xAccessor: (data: any) => any;
-  yAccessor: (data: any) => any;
+  data: D[];
+  xAccessor: (data: D) => number;
+  yAccessor: (data: D) => number;
   y0Accessor?: (data: any) => any;
   curve?: CurveFactory;
 }
 
-export const Line: React.FC<LineProps> = ({
+export const Line = <D,>({
   type,
   curve,
   data,
@@ -22,7 +22,7 @@ export const Line: React.FC<LineProps> = ({
   yAccessor,
   y0Accessor,
   ...svgProps
-}) => {
+}: LineProps<D>) => {
   const dimensions = useSvgDimensions();
   const lineGenerator = useMemo(() => {
     if (type === "area") {
@@ -31,7 +31,7 @@ export const Line: React.FC<LineProps> = ({
           'to use <Line /> as area you need to pass "y0Accessor"'
         );
 
-      const pathGenerator = area()
+      const pathGenerator = area<D>()
         .x(xAccessor)
         .y(yAccessor)
         .y0(y0Accessor)
@@ -40,7 +40,7 @@ export const Line: React.FC<LineProps> = ({
       if (curve) pathGenerator.curve(curve);
       return pathGenerator;
     }
-    const pathGenerator = line().x(xAccessor).y(yAccessor);
+    const pathGenerator = line<D>().x(xAccessor).y(yAccessor);
     if (curve) pathGenerator.curve(curve);
 
     return pathGenerator;

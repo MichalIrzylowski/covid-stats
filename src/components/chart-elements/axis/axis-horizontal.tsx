@@ -1,4 +1,7 @@
 import React from "react";
+
+import { timeFormatter } from "@utils/time";
+
 import { useSvgDimensions } from "../chart-svg";
 
 import { AxisProps } from "./types";
@@ -7,7 +10,8 @@ const fontSize = 10;
 
 export const AxisHorizontal: React.FC<AxisProps> = ({
   scale,
-  timeFormatter,
+  dateFormat,
+  scaleType,
   numberOfTicks,
   title,
   showBigTicks,
@@ -26,7 +30,8 @@ export const AxisHorizontal: React.FC<AxisProps> = ({
       transform={`translate(0, 20)`}
       textAnchor="middle"
     >
-      {(timeFormatter && timeFormatter(tick)) || tick.toString()}
+      {(scaleType === "time" && timeFormatter(dateFormat)(tick)) ||
+        tick.toString()}
     </text>
   ));
 

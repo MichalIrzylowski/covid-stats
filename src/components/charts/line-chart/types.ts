@@ -1,4 +1,4 @@
-import { Scale } from "./helpers/generate-scale";
+import { Scale } from "@utils/generate-scale";
 
 export type DataType = number | string | Date;
 
@@ -15,7 +15,6 @@ export interface ComplexData<D> {
 }
 
 export type Data<D> = ComplexData<D> | SimpleData;
-
 export interface LineChartProps {
   xScaleType?: Scale;
   yScaleType?: Scale;

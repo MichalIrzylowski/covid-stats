@@ -21,7 +21,6 @@ export const LineChart = <D,>(props: LineChartProps & Data<D>) => {
       x: xAccessor(d),
       y: yAccessor(d),
     }));
-
     return (
       <ChartWrapper ref={setElement}>
         <LineChartCore data={generatedData} {...restProps} {...dimensions} />
