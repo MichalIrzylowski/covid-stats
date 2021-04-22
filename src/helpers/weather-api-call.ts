@@ -1,4 +1,4 @@
-const url = "https://data.climacell.co/v4/timelines";
+const url = "https://api.tomorrow.io/v4/timelines";
 const warsawLat = 52.229676;
 const warsawLon = 21.012229;
 const apiKey = process.env.REACT_APP_CLIMACELL_API_KEY;

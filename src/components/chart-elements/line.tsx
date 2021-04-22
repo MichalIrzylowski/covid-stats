@@ -40,7 +40,7 @@ export const Line = <D,>({
       if (curve) pathGenerator.curve(curve);
       return pathGenerator;
     }
-    const pathGenerator = line<D>().x(xAccessor).y(yAccessor);
+    const pathGenerator = line<D>(xAccessor, yAccessor);
     if (curve) pathGenerator.curve(curve);
 
     return pathGenerator;

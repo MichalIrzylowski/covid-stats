@@ -1,3 +1,4 @@
+import { CurveFactory } from "d3";
 import { Scale } from "@utils/generate-scale";
 
 export type DataType = number | string | Date;
@@ -29,4 +30,5 @@ export interface LineChartProps {
   yNumberOfTicks?: number;
   showXNet?: boolean;
   showYNet?: boolean;
+  curve?: CurveFactory;
 }

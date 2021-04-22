@@ -8,7 +8,8 @@ export type Scale = "linear" | "time";
 export const generateScale = (
   type: Scale = "linear",
   data: DataType[],
-  range: [number, number]
+  range: [number, number],
+  nice?: boolean
 ) => {
   if (type === "time") {
     const [min = 0, max = 100] = extent(data as Date[]);
@@ -16,5 +17,8 @@ export const generateScale = (
   }
   const [min = 0, max = 100] = extent(data as number[]);
 
-  return scales.scaleLinear(range).domain([min, max]);
+  const scale = scales.scaleLinear(range).domain([min, max]);
+
+  if (nice) return scale.nice();
+  return scale;
 };

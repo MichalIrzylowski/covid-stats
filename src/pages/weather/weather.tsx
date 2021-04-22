@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { curveMonotoneX } from "d3";
 
 import { weatherApiCall } from "@helpers/weather-api-call";
 import { fetchWeatherTimelineData } from "@store/reducers/weather-timeline/actions";
@@ -31,9 +32,10 @@ export const Weather: React.FC = () => {
       {!weatherTimeline.loading && (
         <LineChart
           data={weatherTimeline.timeline}
-          xAccessor={(d) => new Date(d.startTime)}
+          xAccessor={(d) => new Date(d.startTime).setHours(0)}
           yAccessor={(d) => d.values.temperature}
           xScaleType="time"
+          curve={curveMonotoneX}
         />
       )}
     </>

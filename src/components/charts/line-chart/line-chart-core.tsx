@@ -6,6 +6,8 @@ import {
   ChartBounds,
   Axis,
   Line,
+  Scanner,
+  Dots,
 } from "@components/chart-elements";
 
 import { generateScale } from "@utils/generate-scale";
@@ -21,17 +23,20 @@ export const LineChartCore = ({
   yNumberOfTicks,
   showXNet,
   showYNet,
+  curve,
   ...svgProps
 }: LineChartProps & SimpleData & ChartSvgProps) => {
   const xScale = generateScale(
     xScaleType,
     data.map((d) => d.x),
-    [0, svgProps.boundedWidth]
+    [0, svgProps.boundedWidth],
+    niceXScale
   );
   const yScale = generateScale(
     yScaleType,
     data.map((d) => d.y),
-    [svgProps.boundedHeight, 0]
+    [svgProps.boundedHeight, 0],
+    niceYScale
   );
 
   return (
@@ -40,14 +45,14 @@ export const LineChartCore = ({
         <Axis
           scaleType={xScaleType}
           dimension="x"
-          scale={niceXScale ? xScale.nice() : xScale}
+          scale={xScale}
           numberOfTicks={xNumberOfTicks}
           showBigTicks={showXNet}
         />
         <Axis
           scaleType={yScaleType}
           dimension="y"
-          scale={niceYScale ? yScale.nice() : yScale}
+          scale={yScale}
           numberOfTicks={yNumberOfTicks}
           showBigTicks={showYNet}
         />
@@ -58,7 +63,10 @@ export const LineChartCore = ({
           type="line"
           stroke="#9980FA"
           strokeWidth={2}
+          curve={curve}
         />
+        <Dots data={data} xScale={xScale} yScale={yScale} />
+        <Scanner />
       </ChartBounds>
     </ChartSvg>
   );
