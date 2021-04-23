@@ -23,6 +23,8 @@ export const LineChartCore = ({
   yNumberOfTicks,
   showXNet,
   showYNet,
+  xTimeFormat,
+  yTimeFormat,
   curve,
   ...svgProps
 }: LineChartProps & SimpleData & ChartSvgProps) => {
@@ -48,6 +50,7 @@ export const LineChartCore = ({
           scale={xScale}
           numberOfTicks={xNumberOfTicks}
           showBigTicks={showXNet}
+          dateFormat={xTimeFormat}
         />
         <Axis
           scaleType={yScaleType}
@@ -55,6 +58,7 @@ export const LineChartCore = ({
           scale={yScale}
           numberOfTicks={yNumberOfTicks}
           showBigTicks={showYNet}
+          dateFormat={yTimeFormat}
         />
         <Line
           data={data}
@@ -66,7 +70,7 @@ export const LineChartCore = ({
           curve={curve}
         />
         <Dots data={data} xScale={xScale} yScale={yScale} />
-        <Scanner />
+        <Scanner data={data} xScale={xScale} yScale={yScale} />
       </ChartBounds>
     </ChartSvg>
   );

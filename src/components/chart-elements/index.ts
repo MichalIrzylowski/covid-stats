@@ -6,3 +6,4 @@ export * from "./axis";
 export * from "./title";
 export * from "./scanner";
 export * from "./dots";
+export * from "./chart-tooltip";

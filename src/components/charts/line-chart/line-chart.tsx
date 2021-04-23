@@ -2,6 +2,8 @@ import React, { forwardRef } from "react";
 
 import { useChartDimensions } from "@hooks/use-chart-dimensions";
 
+import { ChartTooltip } from "@components/chart-elements/chart-tooltip";
+
 import { LineChartProps, Data, SimpleData, ChartSize } from "./types";
 import { LineChartCore } from "./line-chart-core";
 
@@ -9,8 +11,8 @@ const ChartWrapper = forwardRef<
   HTMLDivElement,
   { children: React.ReactNode } & ChartSize
 >(({ children, height = 400, width = "100%" }, ref) => (
-  <div ref={ref} style={{ width, height }}>
-    {children}
+  <div ref={ref} style={{ width, height, position: "relative" }}>
+    <ChartTooltip>{children}</ChartTooltip>
   </div>
 ));
 

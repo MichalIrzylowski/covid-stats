@@ -34,6 +34,7 @@ export const Weather: React.FC = () => {
           data={weatherTimeline.timeline}
           xAccessor={(d) => new Date(d.startTime).setHours(0)}
           yAccessor={(d) => d.values.temperature}
+          xTimeFormat="%I %p %Y-%m-%d"
           xScaleType="time"
           curve={curveMonotoneX}
         />

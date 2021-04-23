@@ -2,7 +2,7 @@ import { ScaleLinear, ScaleTime } from "d3-scale";
 
 import { Scale as ScaleType } from "@utils/generate-scale";
 
-export type DateFormat = "%Y-%m-%d";
+export type DateFormat = "%Y-%m-%d" | "%I %p %Y-%m-%d" | "%I %p";
 
 export type Scale =
   | ScaleTime<number, number, never>
